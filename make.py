@@ -59,8 +59,9 @@ def main(size: int, depth: int, tilt: int, stl: bool):
     hole_size = 19
     hole = cylinder(h=d, r=hole_size/2).translateX(-70)
     hole += cube(size, hole_size, d).translate(-size, -hole_size/2, 0).translateX(-70)
-    hole_y = 105 # TODO: 目の高さに合わせた方がいいよね
-    hole = mirror(hole).translateY(hole_y)
+    hole_y = 400 - 138
+
+    hole = mirror(hole).translateY(hole_y * size / canvas_size)
     notch_width = 5
     notch_height = 5
     notch = mirror(cube(notch_width, notch_height+10, d).translateY(-10).translateX(-(size / 2) * 0.6))
