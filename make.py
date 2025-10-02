@@ -2,6 +2,7 @@
 # Licensed under the MIT License. See LICENSE file for details.
 
 from solid2 import *
+import math
 
 set_global_fn(100)
 
@@ -74,7 +75,8 @@ def main(size: int, depth: int, tilt: int, stl: bool):
     stand = stand.translate(0, -5, -(stand_len - 10))
     stand -= cube(notch_width * 3, 15, depth+0.2).translateX(-notch_width).rotate(-tilt, 0, 0)
 
-    support = scale(rounded_cube(canvas_size, canvas_size, canvas_depth, radius), h=hole_y - 15, d=depth)
+    support_height = (hole_y - hole_size) * math.cos(math.radians(tilt))
+    support = scale(rounded_cube(canvas_size, support_height - 15, canvas_depth, radius), d=depth)
     support -= notch
 
     model = (canvas + face).rotateX(-tilt)
@@ -87,7 +89,7 @@ def main(size: int, depth: int, tilt: int, stl: bool):
         canvas.save_as_stl('_canvas.stl')
         face.save_as_stl('_face.stl')
         stand.save_as_stl(f'_stand_{tilt}.stl')
-        support.save_as_stl('_support.stl')
+        support.save_as_stl(f'_support_{tilt}.stl')
 
 
 if __name__ == '__main__':
